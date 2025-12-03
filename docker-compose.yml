@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  backend:
+    build: .
+    container_name: avito-backend
+    environment:
+      - PORT=3000
+      - PUPPETEER_HEADLESS=true
+      - AVITO_EMAIL=${AVITO_EMAIL}
+      - AVITO_PASSWORD=${AVITO_PASSWORD}
+      - AVITO_TARGET_NAME=${AVITO_TARGET_NAME}
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/app
