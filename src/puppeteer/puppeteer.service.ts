@@ -20,7 +20,7 @@ export class PuppeteerService implements OnModuleInit, OnModuleDestroy {
 
   async onModuleInit() {
     this.logger.log('Starting PuppeteerService in demo mode...');
-    this.intervalHandle = setInterval(() => void this.safeCheck(), 5000); 
+    this.intervalHandle = setInterval(() => void this.safeCheck(), 5000);
   }
 
   private async safeCheck() {
@@ -37,22 +37,26 @@ export class PuppeteerService implements OnModuleInit, OnModuleDestroy {
   }
 
   private async checkForNewMessages() {
-    const demoMessages: AvitoMessage[] = [
-      { id: '1', name: 'Анастасия', text: 'Привет!' },
-      { id: '2', name: 'Екатерина', text: 'Как дела?' },
-      { id: '3', name: 'Мария', text: 'Хорошо, спасибо!' },
-    ];    
+    const names = ['Анастасия', 'Екатерина', 'Мария'];
+    const texts = [
+      'Привет!',
+      'Как дела?',
+      'Вы на связи?',
+      'Можно задать вопрос?',
+      'Спасибо за ответ!',
+    ];
 
-    for (const msg of demoMessages) {
-      const isNew = this.messages.addIfNew(msg.id, msg);
-      if (isNew) {
-        this.ws.broadcastNewMessage({
-          ...msg,
-          time: new Date().toISOString(),
-          source: 'demo',
-        });
-      }
-    }
+    const msg: AvitoMessage = {
+      id: Date.now().toString(), // HAR DOIM YANGI
+      name: names[Math.floor(Math.random() * names.length)],
+      text: texts[Math.floor(Math.random() * texts.length)],
+      time: new Date().toISOString(),
+      source: 'demo',
+    };
+
+    this.ws.broadcastNewMessage(msg);
+
+    this.logger.log(`Demo message sent: ${msg.name}: ${msg.text}`);
   }
 
   async onModuleDestroy() {

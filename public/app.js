@@ -1,4 +1,4 @@
-const socket = io('https://patricia-var-geographical-becomes.trycloudflare.com');
+const socket = io('https://seminars-clark-relative-flexible.trycloudflare.com/');
 
 const ul = document.getElementById('messages');
 
